@@ -163,6 +163,7 @@ class _ScrollDatePickerState extends State<ScrollDatePicker> {
             _dayController.jumpToItem(selectedDayIndex);
           }
           isYearScrollable = true;
+          _onDateTimeChanged();
         });
     _monthScrollView = DateScrollView(
       key: const Key("month"),
@@ -180,6 +181,7 @@ class _ScrollDatePickerState extends State<ScrollDatePicker> {
           _dayController.jumpToItem(selectedDayIndex);
         }
         isMonthScrollable = true;
+        _onDateTimeChanged();
       },
     );
     _dayScrollView = DateScrollView(
@@ -194,6 +196,7 @@ class _ScrollDatePickerState extends State<ScrollDatePicker> {
       onChanged: (_) {
         _onDateTimeChanged();
         _initDays();
+        _onDateTimeChanged();
       },
     );
   }
@@ -227,8 +230,7 @@ class _ScrollDatePickerState extends State<ScrollDatePicker> {
 
   void _onDateTimeChanged() {
     final maximumDay = getMonthlyDate(year: selectedYear, month: selectedMonth);
-    _selectedDate =
-        DateTime(selectedYear, selectedMonth, min(selectedDay, maximumDay));
+    _selectedDate = DateTime(selectedYear, selectedMonth, min(selectedDay, maximumDay));
     widget.onDateTimeChanged(_selectedDate);
   }
 
