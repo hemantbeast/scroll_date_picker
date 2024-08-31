@@ -64,7 +64,7 @@ class DateScrollView extends StatelessWidget {
         int _maximumCount = constraints.maxHeight ~/ options.itemExtent;
         return Container(
           margin: scrollViewOptions.margin,
-          width: _getScrollViewWidth(context),
+          width: scrollViewOptions.itemWidth ?? _getScrollViewWidth(context),
           child: ListWheelScrollView.useDelegate(
             itemExtent: options.itemExtent,
             diameterRatio: options.diameterRatio,
@@ -72,8 +72,7 @@ class DateScrollView extends StatelessWidget {
             physics: const FixedExtentScrollPhysics(),
             perspective: options.perspective,
             onSelectedItemChanged: onChanged,
-            childDelegate: options.isLoop ??
-                    scrollViewOptions.isLoop && dates.length > _maximumCount
+            childDelegate: options.isLoop ?? scrollViewOptions.isLoop && dates.length > _maximumCount
                 ? ListWheelChildLoopingListDelegate(
                     children: List<Widget>.generate(
                       dates.length,
@@ -97,11 +96,10 @@ class DateScrollView extends StatelessWidget {
       onTap: () => onTap(index),
       child: Container(
         alignment: scrollViewOptions.alignment,
+        width: scrollViewOptions.itemWidth,
         child: Text(
           '${dates[index]}${scrollViewOptions.label}',
-          style: selectedIndex == index
-              ? scrollViewOptions.selectedTextStyle
-              : scrollViewOptions.textStyle,
+          style: selectedIndex == index ? scrollViewOptions.selectedTextStyle : scrollViewOptions.textStyle,
           textScaler: TextScaler.linear(scrollViewOptions.textScaleFactor),
         ),
       ),
